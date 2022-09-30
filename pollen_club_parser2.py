@@ -5,10 +5,10 @@ import time
 token = '7b15c74f7b15c74f7b15c74f717805135b77b157b15c74f1825b71429e94b9034cf43e3'
 version = 5.131
 domain = 'pollen.club'
-count = 100 # кол-во постов мак можно 100
+count = 50 # кол-во постов мак можно 100
 offset = 0  # смещение для увелечения постов
 all_post = []
-while offset < 1000:
+while offset < 50:
     response_well = requests.get('https://api.vk.com/method/wall.get', # сбор постов
                             params = {'access_token':token,
                                       'v':version,
