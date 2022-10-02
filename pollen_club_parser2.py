@@ -4,7 +4,7 @@ import time
 
 token = '7b15c74f7b15c74f7b15c74f717805135b77b157b15c74f1825b71429e94b9034cf43e3'
 version = 5.131 # версия API
-domain = 'pollen.club'  # id группы 
+domain = 'pollen.club'  # id группы
 count = 100 # кол-во постов max можно 100
 offset = 1000  # смещение для увелечения постов, если надо больше 100
 # сбор постов
@@ -26,7 +26,8 @@ while offset < 1000:
 all_comments = []
 for i in range(len(all_post)):
     if all_post[i]['from_id'] == -87598739:
-        response_comments = requests.get('https://api.vk.com/method/wall.getComments',                                          params= {'access_token': token,
+        response_comments = requests.get('https://api.vk.com/method/wall.getComments',
+                                         params= {'access_token': token,
                                                   'v': version,
                                                   'owner_id': -87598739, # id группы
                                                   'post_id': all_post[i]['id'], # id поста
