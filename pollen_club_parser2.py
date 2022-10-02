@@ -41,8 +41,8 @@ for i in range(len(all_post)):
 
 with open("polen_club.csv", "w", encoding='utf8') as file:
     csv_file = csv.writer(file)
-    csv_file.writerow(('id','data','post'))
+    csv_file.writerow(('post_id','data','post'))
     for item in all_comments:
-        csv_file.writerow((item['id'],item['date'],item['text']))
+        csv_file.writerow((item['post_id'],item['date'],item['text']))
 
 
