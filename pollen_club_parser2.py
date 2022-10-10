@@ -1,15 +1,15 @@
 import csv
 import requests
 import time
+import datetime
 import logging
 import os
 import argparse
 
 _logger = logging.getLogger(__name__)
-
+data = 1663689791
 def setup_logging(logfile, loglevel='DEBUG'):
     """
-
     :param logfile:
     :param loglevel:
     :return:
@@ -37,7 +37,6 @@ def setup_logging(logfile, loglevel='DEBUG'):
 
 def main(delay):
     """
-
     :param delay: delay of web requests
     :return:
     """
@@ -46,6 +45,7 @@ def main(delay):
     domain = 'pollen.club'  # id группы
     count = 100 # кол-во постов max можно 100
     offset = 0  # смещение для увелечения постов, если надо больше 100
+
     # сбор постов
     all_post = []
     _logger.info("Start parsing")
@@ -65,6 +65,7 @@ def main(delay):
             continue
         data_wel = response_well.json()['response']['items']
         all_post.extend(data_wel)
+
 
     #  поиск комментариев в постах группы
     all_comments = []
@@ -94,18 +95,21 @@ def main(delay):
 
     with open("polen_club.csv", "w", encoding='utf8') as file:
         csv_file = csv.writer(file)
-        csv_file.writerow(('post_id','data','post'))
+        csv_file.writerow(('post_id','data','user_id', 'post'))
         try:
             for item in all_comments:
                 # @TODO: add more information (date, id user)
-                csv_file.writerow((item['post_id'], item['date'], item['text']))
+                csv_file.writerow((item['post_id'],
+                                   datetime.datetime.fromtimestamp(item['date']).strftime('%Y-%m-%d %H:%M:%S'),
+                                   item['from_id'],
+                                   item['text']))
         except (FileNotFoundError, IOError) as err:
             _logger.error("Could not save file")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Parser PollenClub")
-    parser.add_argument("--delay", default=1, help="Request delay", dest="delay")
+    parser.add_argument("--delay", default=500, help="Request delay", dest="delay")
     args = parser.parse_args()
 
     setup_logging("parser.log", "INFO")
