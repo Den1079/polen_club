@@ -7,7 +7,6 @@ import os
 import argparse
 
 _logger = logging.getLogger(__name__)
-data = 1663689791
 def setup_logging(logfile, loglevel='DEBUG'):
     """
     :param logfile:
